@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'login_app/css/style.css' %}">
+    <title>Register</title>
+</head>
+<body>
+    <header>
+        <h3 class="playnice">Test App</h3>
+        <p class="playnice"><a href="/">Home</a></p>
+        {% if request.session.email == '' %}
+        <p class="playnice"><a href="/signin">Sign In</a></p>
+        {% else %}
+        <p class="playnice"><a href="/logout">Logout</a></p>
+        {% endif %}
+    </header>
+    <div class="container">
+            <h2>Register</h2>
+            <form action="#" method="post">
+                {% csrf_token%}
+                <p>Email Address</p>
+                <input type="text" name="email">
+                <p>First Name:</p>
+                <input type="text" name="first_name">
+                <p>Last Name:</p>
+                <input type="text" name="last_name">
+                <p>Password</p>
+                <input type="password" name="password">
+                <p>Password Confirmation:</p>
+                <input type="text" name="pw_confirm">
+                <input type="submit" value="Register">
+            </form>
+            <p><a href="/signin">Already have an account? Signin!</a></p>
+        </div>
+    
+</body>
+</html>

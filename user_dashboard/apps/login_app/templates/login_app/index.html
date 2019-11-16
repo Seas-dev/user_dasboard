@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'login_app/css/style.css' %}">
+    <title>Home Page</title>
+</head>
+<body>
+    <header>
+        <h3 class="playnice">Test App</h3>
+        <p class="playnice"><a href="/">Home</a></p>
+        {% if request.session.email == '' %}
+        <p class="playnice"><a href="/signin">Sign In</a></p>
+        {% else %}
+        <p class="playnice"><a href="/logout">Logout</a></p>
+        {% endif %}
+    </header>
+    <div class="container">
+        <div class="welcome">
+            <h1>Welcome to the Test</h1>
+            <p>Little larger font: We're going to build a cool application using a MVC framework! This application was built with the Village88 folks!</p>
+            <a href="/"></a><button>Start</button>
+        </div>
+        <div class="info_block playnice verts">
+            <h4>Manage Users</h4>
+            <p>Using this application, you'll learn how to add, remove, and edit users for the application.</p>
+        </div>
+        <div class="info_block playnice verts">
+            <h4>Leave Messages</h4>
+            <p>Users will be able to leave a message to another user using the application.</p>
+        </div>
+        <div class="info_block playnice verts">
+            <h4>Edit User Information</h4>
+            <p>Admins will be able to edit another user's information (email address, first name, last name, etc.)</p>
+        </div>
+    </div>
+</body>
+</html>
