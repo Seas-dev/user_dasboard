@@ -20,8 +20,16 @@
     </header>
     <div class="container">
             <h2>Register</h2>
-            <form action="#" method="post">
+            <form action="/createUser" method="post">
                 {% csrf_token%}
+                {% if messages %}
+                <ul class="messages">    
+                    {% for message in messages %}    
+                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
                 <p>Email Address</p>
                 <input type="text" name="email">
                 <p>First Name:</p>
@@ -31,7 +39,7 @@
                 <p>Password</p>
                 <input type="password" name="password">
                 <p>Password Confirmation:</p>
-                <input type="text" name="pw_confirm">
+                <input type="password" name="pw_confirm">
                 <input type="submit" value="Register">
             </form>
             <p><a href="/signin">Already have an account? Signin!</a></p>

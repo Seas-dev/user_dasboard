@@ -11,6 +11,10 @@ body {
     vertical-align: top;
 }
 
+.messages {
+    color: red;
+}
+
 header {
     border-bottom: 2px solid darkblue;
 }

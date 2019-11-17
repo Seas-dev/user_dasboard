@@ -20,8 +20,16 @@
     </header>
     <div class="container">
         <h2>Signin</h2>
-        <form action="#" method="post">
+        <form action="/loginUser" method="post">
             {% csrf_token%}
+            {% if messages %}
+            <ul class="messages">    
+                {% for message in messages %}    
+                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+                {% endfor %}
+            </ul>
+            {% endif %}
+
             <p>Email Address</p>
             <input type="text" name="email">
             <p>Password</p>
