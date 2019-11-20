@@ -7,37 +7,51 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'login_app/css/style.css' %}">
-    <title>Home Page</title>
+    <title>User Dashboard</title>
 </head>
 <body>
     <header>
         <h3 class="playnice">Test App</h3>
-        <p class="playnice"><a href="/">Home</a></p>
-        {% if request.session.email == '' %}
-        <p class="playnice"><a href="/signin">Sign In</a></p>
-        {% else %}
+        <!-- Whatever the page the user is on this page make the link bold -->
+        <p class="playnice"><a href="/whichDash">Dashboard</a></p>
+        <p class="playnice"><a href="/users/edit">Profile</a></p>
         <p class="playnice"><a href="/logout">Logout</a></p>
-        {% endif %}
     </header>
     <div class="container">
-        <div class="welcome">
-            <h1>Welcome to the Test</h1>
-            <p>Little larger font: We're going to build a cool application using a MVC framework! This application was built with the Village88 folks!</p>
-            <a href="/register"><button>Start</button></a>
-        </div>
-        <div class="info_block playnice verts">
-            <h4>Manage Users</h4>
-            <p>Using this application, you'll learn how to add, remove, and edit users for the application.</p>
-        </div>
-        <div class="info_block playnice verts">
-            <h4>Leave Messages</h4>
-            <p>Users will be able to leave a message to another user using the application.</p>
-        </div>
-        <div class="info_block playnice verts">
-            <h4>Edit User Information</h4>
-            <p>Admins will be able to edit another user's information (email address, first name, last name, etc.)</p>
-        </div>
+        <h1>Normal User Dashboard</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>email</th>
+                    <th>created_at</th>
+                    <th>user_level</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <th>{{user.id}}</th>
+                    <td><a href="/users/show/{{user.id}}">{{user.first_name.title}} {{user.last_name.title}}</a></td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.created_at.date}}</td>
+                    {% if user.user_level == 9 %}
+                    <td>admin</td>
+                    {% else %}
+                    <td>normal</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
     </div>
+
+
+
+
+
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

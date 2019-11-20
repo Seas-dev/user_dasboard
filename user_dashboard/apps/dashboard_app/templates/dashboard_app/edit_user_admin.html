@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'login_app/css/style.css' %}">
+    <title>Edit User</title>
+</head>
+<body>
+    <header>
+        <h3 class="playnice">Test App</h3>
+        <!-- Whatever the page the user is on this page make the link bold -->
+        <p class="playnice"><a href="/whichDash">Dashboard</a></p>
+        <p class="playnice"><a href="/users/edit">Profile</a></p>
+        <p class="playnice"><a href="/logout">Logout</a></p>
+    </header>
+    <div class="container">
+        <h1>Edit user #{{user.id}}</h1>
+        {% if messages %}
+        <ul class="messages">    
+            {% for message in messages %}    
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <form action="/editUser/{{user.id}}" method="post">
+        {% csrf_token%}
+            <fieldset>
+                <legend>Edit Information</legend>
+                <label for="admin_edit_email">Email Address:</label>
+                <input type="text" name="email" id="admin_edit_email" value="{{user.email}}">
+                <label for="admin_edit_fname">First Name:</label>
+                <input type="text" name="first_name" id="admin_edit_fname" value="{{user.first_name}}">
+                <label for="admin_edit_lname">Last Name:</label>
+                <input type="text" name="last_name" id="admin_edit_lname" value="{{user.last_name}}">
+                <label for="admin_edit_level">User Level:</label>
+                <select name="user_level" id="admin_edit_level">
+                    <option value="1">normal</option>
+                    <option value="9">admin</option>
+                </select>
+                <input type="hidden" name="pw" value="False">
+                <input type="hidden" name="admin" value="True">
+                <input type="submit" value="Save">
+            </fieldset>
+        </form>
+        <form action="/editUser/{{user.id}}" method="post">
+        {% csrf_token%}
+            <fieldset>
+                <legend>Change Password</legend>
+                <label for="admin_edit_password">Password:</label>
+                <input type="password" name="password" id="admin_edit_password">
+                <label for="admin_edit_pw_confirm">Password Confirmation:</label>
+                <input type="password" name="pw_confirm" id="admin_edit_pw_confirm">
+                <input type="hidden" name="pw" value="True">                
+                <input type="hidden" name="admin" value="True">
+                <input type="submit" value="Update Password">
+            </fieldset>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

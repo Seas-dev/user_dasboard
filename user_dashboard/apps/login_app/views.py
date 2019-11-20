@@ -4,8 +4,6 @@ from django.contrib import messages
 from apps.login_app.models import User
 import bcrypt
 
-# TODO: start creating users, then you can move on to the dashboard, make sure to hash those PWs when you create and set the user_level
-
 
 # Create your views here.
 # ============================
@@ -19,17 +17,19 @@ def index(request):
 
 # Sign in page
 def signin(request):
+    request.session.setdefault('email', '')
     return render(request, 'login_app/signin.html')
 
 
 # Register Page
 def register(request):
+    request.session.setdefault('email', '')
     return render(request, 'login_app/register.html')
 
 
-# ==========================
+# ============================
 # Redirects Here
-# ==========================
+# ============================
 
 # Logs the user out of the website
 def logout(request):
@@ -44,6 +44,8 @@ def createUser(request):
         # pass all the errors into messages and redirect to the registration page
         for value in errors.values():
             messages.error(request, value)
+        if request.POST['from_admin'] == 'True':
+            return redirect('/users/new')
         return redirect('/register')
 
     else:
@@ -54,17 +56,34 @@ def createUser(request):
         print("count", num_users)
         if num_users == 0:
             # give this user user_level 9 (admin status)
-            User.objects.create(email=request.POST['email'],
-                                first_name=request.POST['first_name'],
-                                last_name=request.POST['last_name'],
-                                )
-            pass
+            user = User.objects.create(email=request.POST['email'],
+                                    first_name=request.POST['first_name'],
+                                    last_name=request.POST['last_name'],
+                                    password=hash_pw.decode(),
+                                    user_level=9,
+                                    )
         else:
             # create a user with user_level 1
-            pass
+            user = User.objects.create(email=request.POST['email'],
+                                    first_name=request.POST['first_name'],
+                                    last_name=request.POST['last_name'],
+                                    password=hash_pw.decode(),
+                                    user_level=1,
+                                    )
     print("user sucesfully created!")
-    # all other accounts should be redirects to /dashboard
-    return redirect('/')
+    # # all other accounts should be redirects to /dashboard
+    # if user.user_level != 9:
+    #     # if not an admin, redirect to the normal dashboard
+    #     request.session['email']=request.POST['email']
+    #     return redirect('/whichDash')
+    # elif user.user_level == 9:
+    #     # redirect the admin to the dashboard/admin?
+    #     request.session['email']=request.POST['email']
+    if request.POST['from_admin'] == 'True':
+        return redirect('/whichDash')
+    else:
+        request.session['email'] = user.email
+    return redirect('/whichDash')
 
 # Log in the user
 def loginUser(request):
@@ -78,4 +97,5 @@ def loginUser(request):
 
     # if the user is an admin, redirect them to /dashboard/admin
     # otherwise, the user is directed to /dashboard
-    return redirect('/')
+    request.session['email']=request.POST['email']
+    return redirect('/whichDash')

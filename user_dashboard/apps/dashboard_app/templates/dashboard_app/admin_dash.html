@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'login_app/css/style.css' %}">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <header>
+        <h3 class="playnice">Test App</h3>
+        <!-- Whatever the page the user is on this page make the link bold -->
+        <p class="playnice"><a href="/whichDash">Dashboard</a></p>
+        <p class="playnice"><a href="/users/edit">Profile</a></p>
+        <p class="playnice"><a href="/logout">Logout</a></p>
+    </header>
+    <div class="container">
+        <h1>Manage users</h1>
+        <a href="/users/new"><button>Add new</button></a>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>email</th>
+                    <th>created_at</th>
+                    <th>user_level</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <th>{{user.id}}</th>
+                    <td><a href="/users/show/{{user.id}}">{{user.first_name.title}} {{user.last_name.title}}</a></td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.created_at.date}}</td>
+                    {% if user.user_level == 9 %}
+                    <td>admin</td>
+                    {% else %}
+                    <td>normal</td>
+                    {% endif %}
+                    <td><a href="/users/edit/{{user.id}}">edit</a> | <a href="/deleteUser/{{user.id}}">remove</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
