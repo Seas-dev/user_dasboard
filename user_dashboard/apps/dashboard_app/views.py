@@ -4,6 +4,7 @@ from django.contrib import messages
 import bcrypt
 from apps.login_app.models import User
 from apps.dashboard_app.models import Post, Comment
+from datetime import datetime, timedelta, timezone
 
 # Create your views here.
 # ============================
@@ -133,8 +134,8 @@ def createPost(request, id):
     Post.objects.create(user=user,content=request.POST['message'],author=author)
     return redirect('/users/show/' + id)
 
-def createComment(request,messageID,authorID):
+def createComment(request,messageID):
     message = Post.objects.get(id=messageID)
-    poster = User.objects.get(id=authorID)
+    poster = User.objects.get(email=request.session['email'])
     Comment.objects.create(user=poster,post=message,content=request.POST['message'])
     return redirect('/users/show/' + str(message.user.id))

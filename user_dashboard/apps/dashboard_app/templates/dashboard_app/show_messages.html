@@ -31,20 +31,26 @@
             <input type="submit" value="Post">
         </form>
 
-        {% for message in messages%}
-        <p><a href="/users/show/{{message.author.id}}">{{message.author.first_name.title}} {{message.author.last_name.title}}</a> wrote:</p>
-        <p>{{message.content}}</p>
-            {% for comment in message.post_comments.all %}
-            <p><a href="/users/show/{{comment.post.author.id}}">{{comment.post.author.first_name.title}} {{comment.post.author.last_name.title}}</a> wrote:</p>
-            <p>{{comment.content}}</p>
-
+        {% for message in messages reversed %}
+        <div class="border border-primary">
+            <p><a href="/users/show/{{message.author.id}}">{{message.author.first_name.title}} {{message.author.last_name.title}}</a> wrote:</p>
+            <p>{{message.time_posted}}</p>                
+            <p>{{message.content}}</p>
+                <!-- comments start here -->
+                {% for comment in message.post_comments.all %}
+                <div class="border border-info">
+                    <p><a href="/users/show/{{comment.user.id}}">{{comment.user.first_name.title}} {{comment.user.last_name.title}}</a> wrote:</p>
+                    <p>{{comment.time_posted}}</p>
+                    <p>{{comment.content}}</p>        
+                </div>
+                {% endfor %}
+                <form action="/createComment/{{message.id}}" method="post">
+                    {% csrf_token %}
+                    <textarea name="message" id="" cols="30" rows="1" name="message">write a message</textarea>
+                    <input type="submit" value="Post">
+                </form>
+        </div>
             {% endfor %}
-            <form action="/createComment/{{message.id}}/{{message.author.id}}" method="post">
-                {% csrf_token %}
-                <textarea name="message" id="" cols="30" rows="1" name="message"></textarea>
-                <input type="submit" value="Post">
-            </form>
-        {% endfor %}
         
     </div>
 

@@ -36,6 +36,6 @@ urlpatterns = [
     path('editDesc', dash_views.editDesc),
     path('users/show/<id>', dash_views.showUser),
     path('createPost/<id>', dash_views.createPost),
-    path('createComment/<messageID>/<authorID>', dash_views.createComment),
+    path('createComment/<messageID>', dash_views.createComment),
     path('admin/', admin.site.urls),
 ]
