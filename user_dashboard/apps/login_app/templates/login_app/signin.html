@@ -10,30 +10,38 @@
     <title>SignIn</title>
 </head>
 <body>
-    <header>
-        <h3 class="playnice">Test App</h3>
-        <p class="playnice"><a href="/">Home</a></p>
-        <p class="playnice"><a href="/signin">Sign In</a></p>
+    <header class="p-2 border-bottom border-primary topbar">
+        <h3 class="d-inline-block ml-4">Test App</h3>
+        <p class="d-inline-block home"><a href="/">Home</a></p>
+        <p class="float-right logout"><a href="/signin">Sign In</a></p>
     </header>
     <div class="container">
-        <h2>Signin</h2>
-        <form action="/loginUser" method="post">
-            {% csrf_token%}
-            {% if messages %}
-            <ul class="messages">    
-                {% for message in messages %}    
-                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
-                {% endfor %}
-            </ul>
-            {% endif %}
-
-            <p>Email Address</p>
-            <input type="text" name="email">
-            <p>Password</p>
-            <input type="password" name="password">
-            <input type="submit" value="Sign In">
-        </form>
-        <p><a href="/register">Don't have an account? Register Here!</a></p>
+        <div class="row">
+            <div class="col">
+                <h3 class="mt-4">Signin</h3>
+                <form action="/loginUser" method="post" class="p-3">
+                    {% csrf_token%}
+                    {% if messages %}
+                    <ul class="messages">    
+                        {% for message in messages %}    
+                            <li {% if message.tags %} class="{{ message.tags }} text-danger"{% endif %}>{{ message }}</li>    
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <div class="form-group">
+                        <label for="log_email">Email Address:</label>
+                        <input type="text" name="email" id="log_email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="log_pw">Password:</label>
+                        <input type="password" name="password" id="log_pw" class="form-control">
+                    </div>
+                    <input type="submit" value="Sign In" class="btn btn-success float-right start">
+                </form>
+                
+                <p class="mt-5"><a href="/register">Don't have an account? Register Here!</a></p>
+            </div>
+        </div>
     </div>
     
 

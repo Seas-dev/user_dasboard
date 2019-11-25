@@ -3,37 +3,48 @@ body {
     margin: 0px;
 }
 
-.playnice {
-    display: inline-block;
+.home {
+    margin-left: 20px;
+    margin-bottom: 0;
 }
 
-.verts {
-    vertical-align: top;
+.topbar {
+    border-bottom-width: 3px !important;
+    padding-bottom: 0 !important;
 }
 
-.messages {
-    color: red;
+header p {
+    font-size: 1.2rem;
 }
 
-header {
-    border-bottom: 2px solid darkblue;
+.welcome {
+    background-color: rgb(231, 231, 231);
+    border: solid 3px rgb(163, 163, 163);
+    border-radius: 5px;
 }
 
-header h3 {
-    margin-left: 10px;
+.start {
+    box-shadow: 6px 4px black; 
+    border: 2px solid black;
+    padding: 2px 8px;
+    border-radius: 2px;
 }
 
-.container {
-    width: 1000px;
-    margin: 0 auto;
+.logout {
+    margin-right: 20px;
+    margin-bottom: 0;
 }
 
-.info_block {
-    width: 200px;
-    margin-right: 10px;
+.info {
+    min-width: 126px;
 }
+
 
 input[type='submit'] {
     display: block;
     margin-top: 5px;
+}
+
+.time {
+    font-size: .9rem;
 }

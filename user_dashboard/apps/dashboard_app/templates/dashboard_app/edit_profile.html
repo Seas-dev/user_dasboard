@@ -10,60 +10,97 @@
     <title>Edit Profile</title>
 </head>
 <body>
-    <header>
-        <h3 class="playnice">Test App</h3>
+    <header class="p-2 border-bottom border-primary topbar">
+        <h3 class="d-inline-block ml-4">Test App</h3>
         <!-- Whatever the page the user is on this page make the link bold -->
-        <p class="playnice"><a href="/whichDash">Dashboard</a></p>
-        <p class="playnice"><a href="/users/edit">Profile</a></p>
-        <p class="playnice"><a href="/logout">Logout</a></p>
+        <p class="d-inline-block home"><a href="/whichDash">Dashboard</a></p>
+        <p class="d-inline-block home font-weight-bold"><a href="/users/edit">Profile</a></p>
+        <p class="float-right logout"><a href="/logout">Log off</a></p>
     </header>
     <div class="container">
-        <h1>Edit Proflie</h1>
-        {% if messages %}
-        <ul class="messages">    
-            {% for message in messages %}    
-                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
-            {% endfor %}
-        </ul>
-        {% endif %}
+        <div class="row mt-2">
+            <div class="col">
+                <h3>Edit Profile</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {% if messages %}
+                <ul class="messages">    
+                    {% for message in messages %}    
+                        <li {% if message.tags %} class="{{ message.tags }} text-danger"{% endif %}>{{ message }}</li>    
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                
+            </div>
+        </div>
 
-        <form action="/editUser/{{user.id}}" method="post">
-        {% csrf_token%}
-            <fieldset>
-                <legend>Edit Information</legend>
-                <label for="edit_email">Email Address:</label>
-                <input type="text" name="email" id="edit_email" value="{{user.email}}">
-                <label for="edit_fname">First Name:</label>
-                <input type="text" name="first_name" id="edit_fname" value="{{user.first_name}}">
-                <label for="edit_lname">Last Name:</label>
-                <input type="text" name="last_name" id="edit_lname" value="{{user.last_name}}">
-                <input type="hidden" name="pw" value="False">
-                <input type="hidden" name="admin" value="False">
-                <input type="submit" value="Save">
-            </fieldset>
-        </form>
-        <form action="/editUser/{{user.id}}" method="post">
-        {% csrf_token%}
-            <fieldset>
-                <legend>Change Password</legend>
-                <label for="edit_password">Password:</label>
-                <input type="password" name="password" id="edit_password">
-                <label for="edit_pw_confirm">Password Confirmation:</label>
-                <input type="password" name="pw_confirm" id="edit_pw_confirm">
-                <input type="hidden" name="pw" value="True">                
-                <input type="hidden" name="admin" value="False">
-                <input type="submit" value="Update Password">
-            </fieldset>
-        </form>
-        <form action="/editDesc" method="post">
-        {% csrf_token%}
-            <fieldset>
-                <legend>Edit Description</legend>
-                <label for="edit_description"></label>
-                <textarea name="description" id="edit_description" cols="30" rows="10">{{user.description}}</textarea>
-                <input type="submit" value="Save">
-            </fieldset>
-        </form>
+        <div class="row">
+            <div class="col">
+                <form action="/editUser/{{user.id}}" method="post">
+                {% csrf_token%}
+                    <fieldset class="border border-primary p-2">
+                        <legend class="w-auto">Edit Information</legend>
+                        <div class="form-group">
+                            <label for="edit_email">Email Address:</label>
+                            <input type="text" name="email" id="edit_email" value="{{user.email}}" class="form-control" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_fname">First Name:</label>
+                            <input type="text" name="first_name" id="edit_fname" value="{{user.first_name}}" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_lname">Last Name:</label>
+                            <input type="text" name="last_name" id="edit_lname" value="{{user.last_name}}" class="form-control">
+                        </div>
+                        <input type="hidden" name="pw" value="False">
+                        <input type="hidden" name="admin" value="False">
+                        <input type="submit" value="Save" class="btn btn-success float-right start mr-2 mb-2">
+                    </fieldset>
+                </form>
+
+            </div>
+            <div class="col">
+                <form action="/editUser/{{user.id}}" method="post">
+                {% csrf_token%}
+                    <fieldset class="border border-primary p-2">
+                        <legend class="w-auto">Change Password</legend>
+                        <div class="form-group">
+                            <label for="edit_password">Password:</label>
+                            <input type="password" name="password" id="edit_password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit_pw_confirm">Password Confirmation:</label>
+                            <input type="password" name="pw_confirm" id="edit_pw_confirm" class="form-control">
+
+                        </div>
+                        <input type="hidden" name="pw" value="True">           
+                        <input type="hidden" name="admin" value="False">
+                        <input type="submit" value="Update Password" class="btn btn-success float-right start mr-2 mb-2">
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col">
+                <form action="/editDesc" method="post">
+                {% csrf_token%}
+                    <fieldset class="border border-primary p-2">
+                        <legend class="w-auto mb-0">Edit Description</legend>
+                        <div class="form-group mt-0">
+                            <label for="edit_description"></label>
+                            <textarea name="description" id="edit_description" cols="30" rows="4" class="w-100 form-control">{{user.description}}</textarea>
+
+                        </div>
+                        <input type="submit" value="Save" class="btn btn-success float-right start mr-2 mb-2">
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

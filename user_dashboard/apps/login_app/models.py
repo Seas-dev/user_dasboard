@@ -51,16 +51,19 @@ class UserValidator(models.Manager):
 
     def editValidator(self, postData):
         errors = {}
+
+        # changed the email input to a diabled field so that the user can't edit their email 
+
         # make sure the email entered is in the correct format
-        EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
-        if not EMAIL_REGEX.match(postData['email']):          
-            errors['email'] = ("Invalid email address format!")
-            return errors
+        # EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
+        # if not EMAIL_REGEX.match(postData['email']):          
+        #     errors['email'] = ("Invalid email address format!")
+        #     return errors
             
-        # make sure the email is unique and isn't in the database
-        email_ck = User.objects.filter(email=postData['email'])
-        if len(email_ck) > 0:
-            errors['email_exist'] = "Sorry, the email you entered is already taken."
+        # # make sure the email is unique and isn't in the database
+        # email_ck = User.objects.filter(email=postData['email'])
+        # if len(email_ck) > 0:
+        #     errors['email_exist'] = "Sorry, the email you entered is already taken."
 
         # make sure first and last name are longer than 2 characters
         if len(postData['first_name']) < 2:

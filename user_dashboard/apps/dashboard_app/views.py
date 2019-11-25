@@ -45,6 +45,11 @@ def adminAddNew(request):
     return render(request,'dashboard_app/create_user.html')
 
 def adminEditUser(request, id):
+    user = User.objects.filter(email = request.session['email'])
+    # just in case the user somehow gets to this point and not be in the system
+    if len(user) < 1:
+        return redirect('/logout')
+
     user = User.objects.get(id=id)
     context = {
         'user': user,
@@ -59,6 +64,11 @@ def editProfile(request):
     return render(request, 'dashboard_app/edit_profile.html', context)
 
 def showUser(request,id):
+    user = User.objects.filter(email = request.session['email'])
+    # just in case the user somehow gets to this point and not be in the system
+    if len(user) < 1:
+        return redirect('/logout')
+        
     user = User.objects.get(id=id)
     messages = user.posts.all()
     context = {
@@ -85,6 +95,11 @@ def whichDash(request):
         return redirect('/dashboard')
 
 def deleteUser(request, id):
+    user = User.objects.filter(email = request.session['email'])
+    # just in case the user somehow gets to this point and not be in the system
+    if len(user) < 1:
+        return redirect('/logout')
+
     user = User.objects.get(id=id)
     user.delete()
     return redirect('/whichDash')
@@ -112,10 +127,15 @@ def editUser(request, id):
         user.password = hash_pw.decode()
         user.save()
     else:
-        user.first_name = request.POST['first_name']
-        user.last_name = request.POST['last_name']
-        user.email = request.POST['email']
-        user.user_level = request.POST['user_level']
+        # adding some if/else statements so if the user doesn't change their entries, their data doesn't get changed
+        if request.POST['first_name'] != user.first_name:
+            user.first_name = request.POST['first_name']
+        if request.POST['last_name'] != user.last_name:
+            user.last_name = request.POST['last_name']
+        # the edit profile page does not let users eidt their user level, only the admin page does that
+        # user_level won't be in request.POST if a user wants to edit their own profile
+        if 'user_level' in request.POST:
+            user.user_level = request.POST['user_level']
         user.save()
 
 

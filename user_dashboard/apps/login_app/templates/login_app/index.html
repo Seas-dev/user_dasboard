@@ -10,32 +10,34 @@
     <title>Home Page</title>
 </head>
 <body>
-    <header>
-        <h3 class="playnice">Test App</h3>
-        <p class="playnice"><a href="/">Home</a></p>
-        {% if request.session.email == '' %}
-        <p class="playnice"><a href="/signin">Sign In</a></p>
-        {% else %}
-        <p class="playnice"><a href="/logout">Logout</a></p>
-        {% endif %}
+    <header class="p-2 border-bottom border-primary topbar">
+        <h3 class="d-inline-block ml-4">Test App</h3>
+        <p class="d-inline-block home"><a href="/">Home</a></p>
+        <p class="float-right logout"><a href="/signin">Sign In</a></p>
     </header>
-    <div class="container">
-        <div class="welcome">
-            <h1>Welcome to the Test</h1>
-            <p>Little larger font: We're going to build a cool application using a MVC framework! This application was built with the Village88 folks!</p>
-            <a href="/register"><button>Start</button></a>
+    <div class="container p-2">
+        <div class="row">
+            <div class="col">
+                <div class="welcome p-2 pb-5">
+                    <h3 class="font-weight-bold">Welcome to User Dashboard</h3>
+                    <p>This is a project that demonstrates login/registration, password handling, user profile editing, </p>
+                    <a href="/register"><button class="btn btn-primary start">Start</button></a>
+                </div>
+            </div>
         </div>
-        <div class="info_block playnice verts">
-            <h4>Manage Users</h4>
-            <p>Using this application, you'll learn how to add, remove, and edit users for the application.</p>
-        </div>
-        <div class="info_block playnice verts">
-            <h4>Leave Messages</h4>
-            <p>Users will be able to leave a message to another user using the application.</p>
-        </div>
-        <div class="info_block playnice verts">
-            <h4>Edit User Information</h4>
-            <p>Admins will be able to edit another user's information (email address, first name, last name, etc.)</p>
+        <div class="row mt-4">
+            <div class="col">
+                <h5 class="font-weight-bold">Manage Users</h5>
+                <p>Using this application, The you'll learn how to add, remove, and edit users for the application.</p>
+            </div>
+            <div class="col">
+                <h5 class="font-weight-bold">Leave Messages</h5>
+                <p>Users will be able to leave a message to another user using the application.</p>
+            </div>
+            <div class="col">
+                <h5 class="font-weight-bold">Edit User Information</h5>
+                <p>Admins will be able to edit another user's information (email address, first name, last name, etc.)</p>
+            </div>
         </div>
     </div>
 

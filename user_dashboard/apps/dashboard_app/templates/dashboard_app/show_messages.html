@@ -10,45 +10,95 @@
     <title>User Information</title>
 </head>
 <body>
-    <header>
-        <h3 class="playnice">Test App</h3>
+    <header class="p-2 border-bottom border-primary topbar">
+        <h3 class="d-inline-block ml-4">Test App</h3>
         <!-- Whatever the page the user is on this page make the link bold -->
-        <p class="playnice"><a href="/whichDash">Dashboard</a></p>
-        <p class="playnice"><a href="/users/edit">Profile</a></p>
-        <p class="playnice"><a href="/logout">Logout</a></p>
+        <p class="d-inline-block home"><a href="/whichDash">Dashboard</a></p>
+        <p class="d-inline-block home"><a href="/users/edit">Profile</a></p>
+        <p class="float-right logout"><a href="/logout">Log off</a></p>
     </header>
     <div class="container">
-        <h3>{{user.first_name}} {{user.last_name}}</h3>
-        <p>Registered at: {{user.created_at.date}}</p>
-        <p>User ID: #{{user.id}}</p>
-        <p>Email address: {{user.email}}</p>
-        <p>Description: {{user.description}}</p>
+        <div class="row mt-2">
+            <div class="col">
+                <h4 class="font-weight-bold">{{user.first_name}} {{user.last_name}}</h4>
+                <p class="d-inline-block info mb-0">Registered at:</p><p class="d-inline-block mb-0">{{user.created_at.date}}</p>                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p class="d-inline-block info mb-0">User ID:</p><p class="d-inline-block mb-0">#{{user.id}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p class="d-inline-block info mb-0">Email address:</p><p class="d-inline-block mb-0">{{user.email}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p class="d-inline-block info">Description:</p><p class="d-inline-block">{{user.description}}</p>                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mb-3">
+                <h5 class="font-weight-bold">Leave a message for {{user.first_name}}</h5>
+                <form action="/createPost/{{user.id}}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group mb-1">
+                        <textarea name="message" id="" cols="30" rows="2" class="w-100 form-control"></textarea>
+                    </div>
+                    <input type="submit" value="Post" class="btn btn-success float-right start mr-2 mb-2 mt-0">
+                </form>
+            </div>
+        </div>
 
-        <h4>Leave a message for {{user.first_name}}</h4>
-        <form action="/createPost/{{user.id}}" method="post">
-            {% csrf_token %}
-            <textarea name="message" id="" cols="30" rows="6" name="message"></textarea>
-            <input type="submit" value="Post">
-        </form>
 
         {% for message in messages reversed %}
-        <div class="border border-primary">
-            <p><a href="/users/show/{{message.author.id}}">{{message.author.first_name.title}} {{message.author.last_name.title}}</a> wrote:</p>
-            <p>{{message.time_posted}}</p>                
-            <p>{{message.content}}</p>
-                <!-- comments start here -->
-                {% for comment in message.post_comments.all %}
-                <div class="border border-info">
-                    <p><a href="/users/show/{{comment.user.id}}">{{comment.user.first_name.title}} {{comment.user.last_name.title}}</a> wrote:</p>
-                    <p>{{comment.time_posted}}</p>
-                    <p>{{comment.content}}</p>        
+        <div class="row">
+            <div class="col">
+                <div class="row pl-2">
+                    <div class="col">
+                        <p class="mb-0"><a href="/users/show/{{message.author.id}}">{{message.author.first_name.title}} {{message.author.last_name.title}}</a> wrote:</p>
+                    </div>
+                    <div class="col text-right">
+                        <p class="font-italic font-weight-lighter mb-0 time">{{message.time_posted}}</p>
+                    </div>
                 </div>
-                {% endfor %}
-                <form action="/createComment/{{message.id}}" method="post">
-                    {% csrf_token %}
-                    <textarea name="message" id="" cols="30" rows="1" name="message">write a message</textarea>
-                    <input type="submit" value="Post">
-                </form>
+                <div class="row pl-2">
+                    <div class="col">
+                        <p class="border p-1">{{message.content}}</p>
+                    </div>
+                </div>
+                    <!-- comments start here -->
+                    {% for comment in message.post_comments.all %}
+                    <div class="row pl-4">
+                        <div class="col">
+                            <p class="mb-0"><a href="/users/show/{{comment.user.id}}">{{comment.user.first_name.title}} {{comment.user.last_name.title}}</a> wrote:</p>
+                        </div>
+                        <div class="col text-right">
+                            <p class="mb-0 font-italic font-weight-lighter time">{{comment.time_posted}}</p>
+                        </div>
+                    </div>
+                    <div class="row pl-4">
+                        <div class="col">
+                            <p class="pl-1 border">{{comment.content}}</p>        
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="row pl-4">
+                        <div class="col">
+                            <form action="/createComment/{{message.id}}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group mb-1">
+                                    <textarea name="message" id="" cols="30" rows="1" class="w-100 form-control">write a comment</textarea>
+                                </div>
+                                <input type="submit" value="Post" class="btn btn-success float-right start mr-2 mb-4 mt-0">
+                            </form>
+
+                        </div>
+                    </div>
+            </div>
         </div>
             {% endfor %}
         
