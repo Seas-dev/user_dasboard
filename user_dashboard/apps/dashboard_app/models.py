@@ -28,8 +28,10 @@ class Post(models.Model):
         if test_time.days > 7:
             return(self.created_at.date())
         # Between 1 and 7 days - say 'X days ago'
-        elif test_time.days >= 1:
-            return test_time.days + " days ago"
+        elif test_time.days >= 2:
+            return str(test_time.days) + " days ago"
+        elif test_time.days > 0:
+            return str(test_time.days) + " day ago"
         elif hours > 0:
             return str(hours) + " hours ago "
         elif minutes[0] >= 1:
@@ -60,8 +62,10 @@ class Comment(models.Model):
         if test_time.days > 7:
             return(self.created_at.date())
         # Between 1 and 7 days - say 'X days ago'
-        elif test_time.days >= 1:
-            return test_time.days + " days ago"
+        elif test_time.days >= 2:
+            return str(test_time.days) + " days ago"
+        elif test_time.days > 0:
+            return str(test_time.days) + " day ago"
         elif hours > 0:
             return str(hours) + " hours ago "
         elif minutes[0] >= 1:
